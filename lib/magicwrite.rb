@@ -3,7 +3,10 @@ require 'faraday/multipart'
 
 require_relative 'magicwrite/http'
 require_relative 'magicwrite/client'
+require_relative 'magicwrite/agents'
+require_relative 'magicwrite/companies'
 require_relative 'magicwrite/completions'
+require_relative 'magicwrite/ingestions'
 require_relative 'magicwrite/version'
 
 module MagicWrite

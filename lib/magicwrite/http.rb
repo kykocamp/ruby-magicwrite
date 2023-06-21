@@ -21,6 +21,20 @@ module MagicWrite
       end&.body)
     end
 
+    def json_put(path:, parameters:)
+      to_json(conn.put(uri(path: path)) do |req|
+        if parameters[:stream].respond_to?(:call)
+          req.options.on_data = to_json_stream(user_proc: parameters[:stream])
+          parameters[:stream] = true
+        elsif parameters[:stream]
+          raise ArgumentError, 'The stream parameter must be a Proc or have a #call method'
+        end
+
+        req.headers = headers
+        req.body = parameters.to_json
+      end&.body)
+    end
+
     def multipart_post(path:, parameters: nil)
       to_json(conn(multipart: true).post(uri(path: path)) do |req|
         req.headers = headers.merge({ 'Content-Type' => 'multipart/form-data' })

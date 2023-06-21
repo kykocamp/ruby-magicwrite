@@ -8,8 +8,20 @@ module MagicWrite
       MagicWrite.configuration.request_timeout = request_timeout if request_timeout
     end
 
+    def agents
+      @agents ||= MagicWrite::Agents.new
+    end
+
+    def companies
+      @companies ||= MagicWrite::Companies.new
+    end
+
     def completions
       @completions ||= MagicWrite::Completions.new
+    end
+
+    def ingestions
+      @ingestions ||= MagicWrite::Ingestions.new
     end
 
     def session

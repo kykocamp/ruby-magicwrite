@@ -8,12 +8,12 @@ module MagicWrite
       MagicWrite::Client.json_post(path: '/completions', parameters: parameters)
     end
 
-    def create(id:, parameters: {})
-      MagicWrite::Client.json_post(path: "/completions/#{id}", parameters: parameters)
-    end
-
     def retrieve(id:, parameters: {})
       MagicWrite::Client.get(path: "/completions/#{id}", parameters: parameters)
+    end
+
+    def create(id:, parameters: {})
+      MagicWrite::Client.json_post(path: "/completions/#{id}", parameters: parameters)
     end
 
     def delete(id:, completion_id:)
