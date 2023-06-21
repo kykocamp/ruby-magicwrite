@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-magicwrite (0.1.0)
+    ruby-magicwrite (0.1.1)
       faraday (>= 1)
       faraday-multipart (>= 1)
 

@@ -55,18 +55,9 @@ module MagicWrite
 
       JSON.parse(string)
     rescue JSON::ParserError
-      # Convert a multiline string of JSON objects to a JSON array.
       JSON.parse(string.gsub("}\n{", '},{').prepend('[').concat(']'))
     end
 
-    # Given a proc, returns an outer proc that can be used to iterate over a JSON stream of chunks.
-    # For each chunk, the inner user_proc is called giving it the JSON object. The JSON object could
-    # be a data object or an error object as described in the OpenAI API documentation.
-    #
-    # If the JSON object for a given data or error message is invalid, it is ignored.
-    #
-    # @param user_proc [Proc] The inner proc to call for each JSON object in the chunk.
-    # @return [Proc] An outer proc that iterates over a raw stream, converting it to JSON.
     def to_json_stream(user_proc:)
       proc do |chunk, _|
         chunk.scan(/(?:data|error): (\{.*\})/i).flatten.each do |data|
@@ -99,9 +90,6 @@ module MagicWrite
       parameters&.transform_values do |value|
         next value unless value.is_a?(File)
 
-        # Doesn't seem like OpenAI need mime_type yet, so not worth
-        # the library to figure this out. Hence the empty string
-        # as the second argument.
         Faraday::UploadIO.new(value, '', value.path)
       end
     end
