@@ -12,13 +12,17 @@ gem "ruby-magicwrite"
 
 And then execute:
 
+```bash
 $ bundle install
+```
 
 ### Gem install
 
 Or install with:
 
-$ gem install ruby-magicwrite
+```bash
+$ gem install ruby-openai
+```
 
 and require with:
 

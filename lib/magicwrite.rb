@@ -6,11 +6,13 @@ require_relative 'magicwrite/client'
 require_relative 'magicwrite/agents'
 require_relative 'magicwrite/companies'
 require_relative 'magicwrite/completions'
+require_relative 'magicwrite/error'
+require_relative 'magicwrite/error_handler'
 require_relative 'magicwrite/ingestions'
+require_relative 'magicwrite/memberships'
 require_relative 'magicwrite/version'
 
 module MagicWrite
-  class Error < StandardError; end
   class ConfigurationError < Error; end
 
   class Configuration

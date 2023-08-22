@@ -24,6 +24,10 @@ module MagicWrite
       @ingestions ||= MagicWrite::Ingestions.new
     end
 
+    def memberships
+      @memberships ||= MagicWrite::Memberships.new
+    end
+
     def session
       MagicWrite::Client.get(path: '/session')
     end
