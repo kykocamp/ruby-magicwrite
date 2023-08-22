@@ -1,15 +1,19 @@
 module MagicWrite
   class Memberships
-    def initialize(access_token: nil)
-      MagicWrite.configuration.access_token = access_token if access_token
+    def initialize(client:)
+      @client = client
     end
 
     def user
-      MagicWrite::Client.get(path: '/memberships/user')
+      client.get(path: '/memberships/user')
     end
 
     def company
-      MagicWrite::Client.get(path: '/memberships/company')
+      client.get(path: '/memberships/company')
     end
+
+    private
+
+    attr_reader :client
   end
 end

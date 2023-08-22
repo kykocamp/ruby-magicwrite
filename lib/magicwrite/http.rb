@@ -82,20 +82,20 @@ module MagicWrite
 
     def conn(multipart: false)
       Faraday.new do |faraday|
-        faraday.options[:timeout] = MagicWrite.configuration.request_timeout
+        faraday.options[:timeout] = @request_timeout
         faraday.request(:multipart) if multipart
       end
     end
 
     def uri(path:)
-      File.join(MagicWrite.configuration.uri_base, path)
+      File.join(@uri_base, path)
     end
 
     def headers
       {
         'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{MagicWrite.configuration.access_token}"
-      }
+        'Authorization' => "Bearer #{@access_token}"
+      }.merge(@extra_headers || {})
     end
 
     def multipart_parameters(parameters)
