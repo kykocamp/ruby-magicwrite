@@ -1,23 +1,27 @@
 module MagicWrite
   class Ingestions
-    def initialize(access_token: nil)
-      MagicWrite.configuration.access_token = access_token if access_token
+    def initialize(client:)
+      @client = client
     end
 
     def list(parameters: {})
-      MagicWrite::Client.get(path: '/ingestions', parameters: parameters)
+      client.get(path: '/ingestions', parameters: parameters)
     end
 
     def create(parameters: {})
-      MagicWrite::Client.json_post(path: '/ingestions', parameters: parameters)
+      client.json_post(path: '/ingestions', parameters: parameters)
     end
 
     def retrieve(id:)
-      MagicWrite::Client.get(path: "/ingestions/#{id}")
+      client.get(path: "/ingestions/#{id}")
     end
 
     def delete(id:)
-      MagicWrite::Client.delete(path: "/ingestions/#{id}")
+      client.delete(path: "/ingestions/#{id}")
     end
+
+    private
+
+    attr_reader :client
   end
 end

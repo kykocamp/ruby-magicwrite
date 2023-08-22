@@ -1,19 +1,23 @@
 module MagicWrite
   class Companies
-    def initialize(access_token: nil)
-      MagicWrite.configuration.access_token = access_token if access_token
+    def initialize(client:)
+      @client = client
     end
 
     def create(parameters: {})
-      MagicWrite::Client.json_post(path: '/companies', parameters: parameters)
+      client.json_post(path: '/companies', parameters: parameters)
     end
 
     def retrieve
-      MagicWrite::Client.get(path: '/companies/current')
+      client.get(path: '/companies/current')
     end
 
     def update(parameters: {})
-      MagicWrite::Client.json_put(path: '/companies/current', parameters: parameters)
+      client.json_put(path: '/companies/current', parameters: parameters)
     end
+
+    private
+
+    attr_reader :client
   end
 end

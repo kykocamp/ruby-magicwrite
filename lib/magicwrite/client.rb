@@ -1,35 +1,43 @@
 module MagicWrite
   class Client
-    extend MagicWrite::HTTP
+    include MagicWrite::HTTP
 
-    def initialize(access_token: nil, uri_base: nil, request_timeout: nil)
-      MagicWrite.configuration.access_token = access_token if access_token
-      MagicWrite.configuration.uri_base = uri_base if uri_base
-      MagicWrite.configuration.request_timeout = request_timeout if request_timeout
+    CONFIG_KEYS = %i[
+      access_token
+      uri_base
+      request_timeout
+      extra_headers
+    ].freeze
+    attr_reader(*CONFIG_KEYS)
+
+    def initialize(config = {})
+      CONFIG_KEYS.each do |key|
+        instance_variable_set("@#{key}", config[key] || MagicWrite.configuration.send(key))
+      end
     end
 
     def agents
-      @agents ||= MagicWrite::Agents.new
+      @agents ||= MagicWrite::Agents.new(client: self)
     end
 
     def companies
-      @companies ||= MagicWrite::Companies.new
+      @companies ||= MagicWrite::Companies.new(client: self)
     end
 
     def completions
-      @completions ||= MagicWrite::Completions.new
+      @completions ||= MagicWrite::Completions.new(client: self)
     end
 
     def ingestions
-      @ingestions ||= MagicWrite::Ingestions.new
+      @ingestions ||= MagicWrite::Ingestions.new(client: self)
     end
 
     def memberships
-      @memberships ||= MagicWrite::Memberships.new
+      @memberships ||= MagicWrite::Memberships.new(client: self)
     end
 
     def session
-      MagicWrite::Client.get(path: '/session')
+      get(path: '/session')
     end
   end
 end

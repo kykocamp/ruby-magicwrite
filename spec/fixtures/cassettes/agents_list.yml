@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.magicwrite.ai/rest/agents
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <MAGICWRITE_ACCESS_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 22 Aug 2023 05:18:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '698'
+      Connection:
+      - close
+      Apigw-Requestid:
+      - KC-5YheOGjQEJEw=
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJkYXRhIjpbeyJhZ2VudElEIjoiYWdlbnRfMDFIOERUUTQyU0hDS0swUVpHOEpHWk5ZRlEiLCJjb21wYW55SUQiOiJjb18wMUgzRVIzTk5OSFpDS0oySEJXWjE2OTIzMyIsIm5hbWUiOiJBZ2VudCAwMDIiLCJmcmVlZG9tIjoicmVzdHJpY3RlZCIsInN0YXR1cyI6ImRyYWZ0IiwiZmxvd3MiOltdLCJpbmdlc3Rpb25zIjpbXSwiZG9jdW1lbnRzIjpbXSwiY3JlYXRlZEF0IjoxNjkyNjgxMzQzMDY3LCJ1cGRhdGVkQXQiOjE2OTI2ODEzNDMwNjh9LHsiYWdlbnRJRCI6ImFnZW50XzAxSDhESDExNVdWOVBNN0NHNDNDRE5DSlFXIiwiY29tcGFueUlEIjoiY29fMDFIM0VSM05OTkhaQ0tKMkhCV1oxNjkyMzMiLCJuYW1lIjoiQWdlbnRlIDAwMSIsImRlc2NyaXB0aW9uIjoiQWdlbnRlIHBhcmEgY29uc3VtaXIgaW5mb3JtYcOnw7VlcyBzb2JyZSB2ZW5kYXMiLCJ3ZWxjb21lIjoiT2zDoSwgdHVkbyBiZW0/IiwiZnJlZWRvbSI6InJlc3RyaWN0ZWQiLCJvZmYiOiJEZXNjdWxwZSwgbsOjbyBzZWkgYSByZXNwb3N0YS4iLCJjb2xvciI6IiMzZjUxYjUiLCJzdGF0dXMiOiJvbmxpbmUiLCJmbG93cyI6W10sImluZ2VzdGlvbnMiOlsiaW5nZXN0XzAxSDhES0FQRkgzVEI2RlQ4WUQxMFlCQjQyIl0sImRvY3VtZW50cyI6W10sImNyZWF0ZWRBdCI6MTY5MjY3MzY5Mzk4MiwidXBkYXRlZEF0IjoxNjkyNjczNjkzOTgyfV0sImN1cnNvciI6bnVsbH0=
+  recorded_at: Tue, 22 Aug 2023 05:18:00 GMT
+recorded_with: VCR 6.1.0

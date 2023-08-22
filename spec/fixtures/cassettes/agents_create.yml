@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.magicwrite.ai/rest/agents
+    body:
+      encoding: UTF-8
+      string: '{"name":"Agent 002"}'
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <MAGICWRITE_ACCESS_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 22 Aug 2023 05:18:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '243'
+      Connection:
+      - keep-alive
+      Apigw-Requestid:
+      - KC-5aiCVGjQEJMw=
+    body:
+      encoding: UTF-8
+      string: '{"agentID":"agent_01H8DTVAM95Q5732BX456W0XRC","companyID":"co_01H3ER3NNNHZCKJ2HBWZ169233","name":"Agent
+        002","freedom":"restricted","status":"draft","flows":[],"ingestions":[],"documents":[],"createdAt":1692681480842,"updatedAt":1692681480842}'
+  recorded_at: Tue, 22 Aug 2023 05:18:00 GMT
+recorded_with: VCR 6.1.0
