@@ -1,54 +1,66 @@
 module MagicWrite
   module HTTP
     def get(path:, parameters: {})
-      to_json(conn.get(uri(path: path)) do |req|
-        req.headers = headers
-        req.body = parameters.to_json
-      end&.body)
+      build_response(conn.get(uri(path: path)) do |request|
+        request.headers = headers
+        request.body = parameters.to_json
+      end)
     end
 
     def json_post(path:, parameters:)
-      to_json(conn.post(uri(path: path)) do |req|
+      build_response(conn.post(uri(path: path)) do |request|
         if parameters[:stream].respond_to?(:call)
-          req.options.on_data = to_json_stream(user_proc: parameters[:stream])
+          request.options.on_data = to_json_stream(user_proc: parameters[:stream])
           parameters[:stream] = true
         elsif parameters[:stream]
           raise ArgumentError, 'The stream parameter must be a Proc or have a #call method'
         end
 
-        req.headers = headers
-        req.body = parameters.to_json
-      end&.body)
+        request.headers = headers
+        request.body = parameters.to_json
+      end)
     end
 
     def json_put(path:, parameters:)
-      to_json(conn.put(uri(path: path)) do |req|
+      build_response(conn.put(uri(path: path)) do |request|
         if parameters[:stream].respond_to?(:call)
-          req.options.on_data = to_json_stream(user_proc: parameters[:stream])
+          request.options.on_data = to_json_stream(user_proc: parameters[:stream])
           parameters[:stream] = true
         elsif parameters[:stream]
           raise ArgumentError, 'The stream parameter must be a Proc or have a #call method'
         end
 
-        req.headers = headers
-        req.body = parameters.to_json
-      end&.body)
+        request.headers = headers
+        request.body = parameters.to_json
+      end)
     end
 
     def multipart_post(path:, parameters: nil)
-      to_json(conn(multipart: true).post(uri(path: path)) do |req|
-        req.headers = headers.merge({ 'Content-Type' => 'multipart/form-data' })
-        req.body = multipart_parameters(parameters)
-      end&.body)
+      build_response(conn(multipart: true).post(uri(path: path)) do |request|
+        request.headers = headers.merge({ 'Content-Type' => 'multipart/form-data' })
+        request.body = multipart_parameters(parameters)
+      end)
     end
 
     def delete(path:)
-      to_json(conn.delete(uri(path: path)) do |req|
-        req.headers = headers
-      end&.body)
+      build_response(conn.delete(uri(path: path)) do |request|
+        request.headers = headers
+      end)
     end
 
     private
+
+    def build_response(response)
+      return parsed_response(response) if response.status.between?(200, 299)
+
+      MagicWrite::ErrorHandler.new(response).raise_error
+    end
+
+    def parsed_response(response)
+      return unless response
+
+      to_json(response.body)
+    end
 
     def to_json(string)
       return unless string
@@ -69,9 +81,9 @@ module MagicWrite
     end
 
     def conn(multipart: false)
-      Faraday.new do |f|
-        f.options[:timeout] = MagicWrite.configuration.request_timeout
-        f.request(:multipart) if multipart
+      Faraday.new do |faraday|
+        faraday.options[:timeout] = MagicWrite.configuration.request_timeout
+        faraday.request(:multipart) if multipart
       end
     end
 

@@ -9,6 +9,7 @@ require_relative 'magicwrite/completions'
 require_relative 'magicwrite/error'
 require_relative 'magicwrite/error_handler'
 require_relative 'magicwrite/ingestions'
+require_relative 'magicwrite/memberships'
 require_relative 'magicwrite/version'
 
 module MagicWrite
